@@ -264,8 +264,8 @@ body.state-portfolio .pov-scene {
 .pov-ambient::before {
   content: "";
   position: absolute;
-  left: calc(14% - 60px);
-  top: calc(79% - 160px);
+  left: calc(82% - 60px);
+  top: calc(49% - 160px);
   width: 120px;
   height: 160px;
   background: radial-gradient(
@@ -404,8 +404,8 @@ body.state-portfolio .pov-scene {
 }
 
 .hotspot--screen {
-  width: min(560px, 44%);
-  height: 32%;
+  width: min(560px, 32%);
+  height: 30%;
 }
 
 /* En touch, los chips quedan siempre parcialmente visibles ya que no hay hover */
@@ -495,7 +495,7 @@ body.state-portfolio .pov-scene {
 
 .sketch-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 12px;
   margin: 16px 0 0;
 }

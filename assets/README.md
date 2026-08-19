@@ -1,25 +1,25 @@
 # Assets pendientes
 
-Este sitio ships con placeholders SVG generados (marcados visualmente como
-placeholders, no fotos falsas) para poder probar toda la interacción sin
-material real. Esto es lo que falta reemplazar:
+## `/assets/pov/` — escena POV del escritorio ✅ fotos reales cargadas
 
-## `/assets/pov/` — escena POV del escritorio
-
-| Archivo actual (placeholder) | Reemplazar por | Notas |
+| Archivo | Uso | Notas |
 |---|---|---|
-| `desk-scene-placeholder.svg` | Foto o poster del escritorio real, vista fija en primera persona | Usar como `src` del `<img class="pov-bg">` en `index.html`. Mantené el formato ~16:9. |
-| — (no existe todavía) | `desk-loop.mp4` / `desk-loop.webm` | Loop corto (pocos segundos) de movimiento sutil — vapor del mate, luz ambiente. En `index.html` hay un bloque comentado (`<!-- TODO(assets reales) -->`) con el `<video>` listo para descomentar una vez que subas los archivos. `main.js` ya maneja el fallback: si el video no puede reproducir, se elimina y queda la imagen de fondo. |
-| `mate-detail-placeholder.svg` | Foto detalle del mate | Panel "El mate galleta". |
-| `libreta-sketch-1-placeholder.svg`, `libreta-sketch-2-placeholder.svg` | Fotos/escaneos de bocetos reales | Panel "Bocetos a mano". Se pueden agregar más `<img>` al `.sketch-grid` en `index.html`. |
-| `auriculares-detail-placeholder.svg` | Foto detalle de los auriculares | Panel de mood musical. |
+| `desk-scene.JPG` | Fondo de la escena POV (`<img class="pov-bg">`) | Foto real, EXIF/GPS removido, redimensionada a 2400px para peso web (~640 KB). |
+| `mate-detail.JPG` | Panel "El mate galleta" | Foto real. |
+| `libreta-sketch-1.JPG` | Panel "Bocetos a mano" | Foto real. Se pueden sumar más `<img>` al `.sketch-grid` en `index.html` cuando tengas más páginas. |
+| `auriculares-detail.JPG` | Panel de mood musical | Foto real. |
+| — (no existe todavía) | `desk-loop.mp4` / `desk-loop.webm` | Loop corto (pocos segundos) de movimiento sutil — vapor del mate, luz ambiente. En `index.html` hay un bloque comentado con el `<video>` listo para descomentar una vez que subas los archivos. `main.js` ya maneja el fallback: si el video no puede reproducir, se elimina y queda la imagen de fondo. |
 
-**Importante — coordenadas de los hotspots:** cada botón `.hotspot` en
-`index.html` tiene `style="--x: N%; --y: N%"`, que posiciona el punto sobre
-la imagen de fondo. Los porcentajes actuales corresponden a las zonas
-marcadas en el SVG placeholder (mate, libreta, auriculares, pantalla). Al
-reemplazar la imagen por la foto real, ajustá esos `--x`/`--y` para que
-coincidan con la posición real de cada objeto en tu foto.
+**Nota sobre `desk-scene.JPG`:** en esta foto en particular hay una taza/vela
+en el lugar donde normalmente está el mate (no el mate en sí). El hotspot
+"Mi mate" apunta a esa posición porque es donde el mate suele estar en tu
+escritorio real — si más adelante sacás una foto general con el mate puesto
+ahí, reemplazá `desk-scene.JPG` y no deberías necesitar tocar nada más.
+
+**Coordenadas de los hotspots:** cada botón `.hotspot` en `index.html` tiene
+`style="--x: N%; --y: N%"`, ya ajustado a las posiciones reales en
+`desk-scene.JPG`. Si subís una foto distinta con objetos en otro lugar,
+reajustá esos valores.
 
 ## `/assets/audio/` — narración de proyectos
 
