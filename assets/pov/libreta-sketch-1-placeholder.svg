@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 480" role="img" aria-labelledby="sketch1-ph-title">
+  <title id="sketch1-ph-title">Placeholder de boceto 1</title>
+  <rect width="640" height="480" fill="#141210"/>
+  <rect x="16" y="16" width="608" height="448" fill="none" stroke="#f5f5f0" stroke-opacity="0.3" stroke-width="2" stroke-dasharray="10 8"/>
+  <text x="320" y="230" text-anchor="middle" fill="#f5f5f0" fill-opacity="0.55" font-family="monospace" font-size="20">BOCETO 01</text>
+  <text x="320" y="258" text-anchor="middle" fill="#f5f5f0" fill-opacity="0.35" font-family="monospace" font-size="14">placeholder — reemplazar</text>
+</svg>

@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-labelledby="pov-placeholder-title">
+  <title id="pov-placeholder-title">Placeholder de la escena POV del escritorio</title>
+  <defs>
+    <linearGradient id="wall" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#151312"/>
+      <stop offset="100%" stop-color="#0a0908"/>
+    </linearGradient>
+    <linearGradient id="desk" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#2a221b"/>
+      <stop offset="100%" stop-color="#171310"/>
+    </linearGradient>
+    <radialGradient id="lamp" cx="50%" cy="30%" r="60%">
+      <stop offset="0%" stop-color="#3a2f22" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#0a0908" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect x="0" y="0" width="1600" height="900" fill="url(#wall)"/>
+  <rect x="0" y="0" width="1600" height="900" fill="url(#lamp)"/>
+  <rect x="0" y="560" width="1600" height="340" fill="url(#desk)"/>
+  <line x1="0" y1="560" x2="1600" y2="560" stroke="#000" stroke-opacity="0.4" stroke-width="2"/>
+
+  <!-- Monitor / pantalla hotspot zone -->
+  <rect x="480" y="60" width="640" height="420" rx="10" fill="#050505" stroke="#f5f5f0" stroke-opacity="0.35" stroke-width="2" stroke-dasharray="10 8"/>
+  <text x="800" y="280" text-anchor="middle" fill="#f5f5f0" fill-opacity="0.55" font-family="monospace" font-size="22">PANTALLA</text>
+  <text x="800" y="308" text-anchor="middle" fill="#f5f5f0" fill-opacity="0.4" font-family="monospace" font-size="14">click para entrar al portfolio</text>
+
+  <!-- Mate hotspot zone -->
+  <rect x="120" y="600" width="200" height="220" rx="8" fill="none" stroke="#f5f5f0" stroke-opacity="0.35" stroke-width="2" stroke-dasharray="10 8"/>
+  <text x="220" y="715" text-anchor="middle" fill="#f5f5f0" fill-opacity="0.55" font-family="monospace" font-size="18">MATE</text>
+
+  <!-- Libreta hotspot zone -->
+  <rect x="430" y="680" width="340" height="170" rx="8" fill="none" stroke="#f5f5f0" stroke-opacity="0.35" stroke-width="2" stroke-dasharray="10 8"/>
+  <text x="600" y="770" text-anchor="middle" fill="#f5f5f0" fill-opacity="0.55" font-family="monospace" font-size="18">LIBRETA</text>
+
+  <!-- Auriculares hotspot zone -->
+  <rect x="1180" y="520" width="260" height="260" rx="8" fill="none" stroke="#f5f5f0" stroke-opacity="0.35" stroke-width="2" stroke-dasharray="10 8"/>
+  <text x="1310" y="655" text-anchor="middle" fill="#f5f5f0" fill-opacity="0.55" font-family="monospace" font-size="18">AURICULARES</text>
+
+  <text x="800" y="850" text-anchor="middle" fill="#f5f5f0" fill-opacity="0.3" font-family="monospace" font-size="16">PLACEHOLDER POV — reemplazar en /assets/pov con foto o video real del escritorio</text>
+</svg>
