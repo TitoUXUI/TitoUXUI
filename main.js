@@ -192,11 +192,9 @@
      (evita requests rotos y ruido en consola).
      --------------------------------------------------------- */
   var SPOTIFY_PLAYLISTS = {
-    // TODO: pegar el URI/ID real de cada playlist de Spotify, ej:
-    // concentracion: "37i9dQZF1DWZeKCadgRdKQ"
-    concentracion: "",
-    creativa: "",
-    tranquila: ""
+    concentracion: { type: "playlist", id: "37i9dQZF1DX7EF8wVxBVhG" },
+    creativa: { type: "album", id: "0LMOYhr8s4J84ALzWVGBa6" },
+    tranquila: { type: "playlist", id: "37i9dQZF1DXaw68inx4UiN" }
   };
 
   var moodButtons = document.querySelectorAll(".mood-button");
@@ -204,13 +202,15 @@
 
   function renderMood(mood, label) {
     if (!moodEmbed) return;
-    var playlistId = SPOTIFY_PLAYLISTS[mood];
-    if (playlistId) {
+    var entry = SPOTIFY_PLAYLISTS[mood];
+    if (entry && entry.id) {
       moodEmbed.innerHTML =
-        '<iframe title="Playlist ' +
+        '<iframe title="' +
         label +
-        '" src="https://open.spotify.com/embed/playlist/' +
-        playlistId +
+        '" src="https://open.spotify.com/embed/' +
+        entry.type +
+        "/" +
+        entry.id +
         '" height="152" loading="lazy" allow="encrypted-media"></iframe>';
     } else {
       moodEmbed.textContent =

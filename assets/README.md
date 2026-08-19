@@ -32,13 +32,16 @@ grabá y subí:
 - `proyecto-01-narracion.mp3`
 - `proyecto-02-narracion.mp3`
 
-## Spotify — selector de mood
+## Spotify — selector de mood ✅ completado
 
-En `main.js`, el objeto `SPOTIFY_PLAYLISTS` tiene tres claves vacías
-(`concentracion`, `creativa`, `tranquila`). Completá cada una con el ID de
-playlist real de Spotify (el segmento después de `/playlist/` en la URL) y
-el iframe se embebe automáticamente. Mientras estén vacías, se muestra un
-mensaje placeholder en vez de intentar cargar un iframe roto.
+`SPOTIFY_PLAYLISTS` en `main.js` ya tiene los 3 enlaces reales:
+
+- **Concentración** → playlist `37i9dQZF1DX7EF8wVxBVhG`
+- **Creativa** → álbum `0LMOYhr8s4J84ALzWVGBa6`
+- **Tranquila** → playlist `37i9dQZF1DXaw68inx4UiN`
+
+Si en algún momento cambiás alguno, cada entrada tiene `type` (`"playlist"`
+o `"album"`) e `id` — usá el segmento correspondiente de la URL de Spotify.
 
 ## Copys pendientes de ajuste
 
