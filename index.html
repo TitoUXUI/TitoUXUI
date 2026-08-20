@@ -42,29 +42,30 @@
        ===================================================== -->
   <section id="pov-scene" class="pov-scene" aria-label="Escritorio de Nicolás, escena interactiva de entrada">
     <div class="pov-frame">
-      <!--
-        TODO(asset final pendiente): reemplazar este placeholder por el fondo
-        real de la escena POV una vez generado. Medidas exactas y formato en
-        assets/_reference/README.md — en resumen: 2400×1800px (4:3, mismo
-        encuadre que la foto de referencia), JPG/PNG como poster o
-        MP4+WebM si es un loop de video. Para reemplazar:
+      <!-- Fondo definitivo: foto real del escritorio, animada por CSS
+           (Ken Burns sutil) para que se sienta como una foto viva en vez
+           de un loop de video generado. -->
+      <picture>
+        <source srcset="assets/pov/desk-scene.webp" type="image/webp" />
+        <img
+          class="pov-bg"
+          src="assets/pov/desk-scene.jpg"
+          alt="Escritorio de Nicolás visto en primera persona: laptop y monitor externo a la izquierda, libreta y taza al centro, auriculares a la derecha."
+          fetchpriority="high"
+        />
+      </picture>
 
-        1) Borrar el <div class="asset-pending asset-pending--pov"> de abajo.
-        2) Poner en su lugar:
-           <img class="pov-bg" src="assets/pov/desk-scene-final.jpg" alt="..." />
-           (o el <video class="pov-video"> si es un loop, con el mismo <img>
-           como poster/fallback — main.js ya maneja ese caso).
-        3) No hace falta tocar el CSS ni las coordenadas de los hotspots: están
-           calculadas sobre el mismo encuadre que esta referencia.
-      -->
-      <div class="asset-pending asset-pending--pov" role="img" aria-label="Escena POV: fondo del escritorio pendiente de asset final">
-        <p class="asset-pending-label">
-          <strong>Escena POV — pendiente de asset final</strong>
-          Este es un placeholder. El fondo real (foto o video del escritorio) todavía no fue generado.
-        </p>
+      <!-- Vapor del mate: 3 líneas SVG que suben y se desvanecen en loop,
+           superpuestas sobre la posición real del mate en la foto. -->
+      <div class="pov-steam" aria-hidden="true" style="--x: 82%; --y: 49%">
+        <svg viewBox="0 0 40 90" width="40" height="90" aria-hidden="true">
+          <path class="steam-path steam-path--1" d="M20 88 C 8 70, 30 55, 18 40 C 8 28, 26 15, 20 2" />
+          <path class="steam-path steam-path--2" d="M14 88 C 24 72, 6 58, 16 42 C 26 30, 10 16, 16 2" />
+          <path class="steam-path steam-path--3" d="M26 88 C 16 70, 34 56, 22 40 C 12 26, 28 14, 22 2" />
+        </svg>
       </div>
 
-      <!-- Cinemagraph sustituto en CSS (vapor + luz) hasta tener el video real -->
+      <!-- Flicker de luz ambiente sutil -->
       <div class="pov-ambient" aria-hidden="true"></div>
 
       <button

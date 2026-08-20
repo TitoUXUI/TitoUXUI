@@ -1,22 +1,21 @@
 # Assets pendientes
 
-## `/assets/pov/` — escena POV del escritorio ⏳ placeholders, a la espera del asset final
+## `/assets/pov/` — escena POV del escritorio
 
-Las fotos que subiste eran solo referencia de encuadre — **no se usan en el
-sitio**. Se movieron a `/assets/_reference/` (no se sirven en producción) y
-en su lugar, `index.html` muestra un placeholder visual explícito
-("Escena POV — pendiente de asset final", etc.) en cada uno de los 4 lugares:
-fondo de la escena, panel del mate, panel de la libreta, panel de auriculares.
+**Fondo de la escena** (`desk-scene.jpg` / `.webp`) ✅ **es el asset final**,
+no un placeholder. Nicolás decidió usar la foto real directamente —animada
+por CSS (Ken Burns sutil + vapor del mate en SVG + flicker de luz, todo en
+`styles.css`)— en vez de generar un video con IA. No hay ningún asset de
+video pendiente.
 
-Las medidas exactas que debe tener cada asset final (para que encaje sin
-tocar el CSS) están documentadas en **`assets/_reference/README.md`**, junto
-con las instrucciones puntuales (comentarios `TODO(asset final pendiente)`
-en `index.html`) de qué borrar y qué `<img>`/`<video>` poner en su lugar.
+**Los 3 paneles de detalle** (mate, libreta, auriculares) siguen mostrando
+el placeholder "pendiente de asset final" — eso no cambió en esta vuelta.
+Las medidas exactas para esos 3 assets están en `assets/_reference/README.md`.
 
 **Coordenadas de los hotspots:** cada botón `.hotspot` en `index.html` tiene
-`style="--x: N%; --y: N%"`, ya calculado a partir del encuadre de las fotos
-de referencia (mate, libreta, auriculares, pantalla). Se conservan tal cual
-— si el asset final respeta el mismo encuadre/ángulo, coinciden sin retocar.
+`style="--x: N%; --y: N%"`, calculado a partir del encuadre de la foto de
+referencia y sin recalcular en este cambio — coinciden con `desk-scene.jpg`
+tal cual está.
 
 ## `/assets/audio/` — narración de proyectos
 
