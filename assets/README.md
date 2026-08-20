@@ -1,25 +1,22 @@
 # Assets pendientes
 
-## `/assets/pov/` — escena POV del escritorio ✅ fotos reales cargadas
+## `/assets/pov/` — escena POV del escritorio ⏳ placeholders, a la espera del asset final
 
-| Archivo | Uso | Notas |
-|---|---|---|
-| `desk-scene.JPG` | Fondo de la escena POV (`<img class="pov-bg">`) | Foto real, EXIF/GPS removido, redimensionada a 2400px para peso web (~640 KB). |
-| `mate-detail.JPG` | Panel "El mate galleta" | Foto real. |
-| `libreta-sketch-1.JPG` | Panel "Bocetos a mano" | Foto real. Se pueden sumar más `<img>` al `.sketch-grid` en `index.html` cuando tengas más páginas. |
-| `auriculares-detail.JPG` | Panel de mood musical | Foto real. |
-| — (no existe todavía) | `desk-loop.mp4` / `desk-loop.webm` | Loop corto (pocos segundos) de movimiento sutil — vapor del mate, luz ambiente. En `index.html` hay un bloque comentado con el `<video>` listo para descomentar una vez que subas los archivos. `main.js` ya maneja el fallback: si el video no puede reproducir, se elimina y queda la imagen de fondo. |
+Las fotos que subiste eran solo referencia de encuadre — **no se usan en el
+sitio**. Se movieron a `/assets/_reference/` (no se sirven en producción) y
+en su lugar, `index.html` muestra un placeholder visual explícito
+("Escena POV — pendiente de asset final", etc.) en cada uno de los 4 lugares:
+fondo de la escena, panel del mate, panel de la libreta, panel de auriculares.
 
-**Nota sobre `desk-scene.JPG`:** en esta foto en particular hay una taza/vela
-en el lugar donde normalmente está el mate (no el mate en sí). El hotspot
-"Mi mate" apunta a esa posición porque es donde el mate suele estar en tu
-escritorio real — si más adelante sacás una foto general con el mate puesto
-ahí, reemplazá `desk-scene.JPG` y no deberías necesitar tocar nada más.
+Las medidas exactas que debe tener cada asset final (para que encaje sin
+tocar el CSS) están documentadas en **`assets/_reference/README.md`**, junto
+con las instrucciones puntuales (comentarios `TODO(asset final pendiente)`
+en `index.html`) de qué borrar y qué `<img>`/`<video>` poner en su lugar.
 
 **Coordenadas de los hotspots:** cada botón `.hotspot` en `index.html` tiene
-`style="--x: N%; --y: N%"`, ya ajustado a las posiciones reales en
-`desk-scene.JPG`. Si subís una foto distinta con objetos en otro lugar,
-reajustá esos valores.
+`style="--x: N%; --y: N%"`, ya calculado a partir del encuadre de las fotos
+de referencia (mate, libreta, auriculares, pantalla). Se conservan tal cual
+— si el asset final respeta el mismo encuadre/ángulo, coinciden sin retocar.
 
 ## `/assets/audio/` — narración de proyectos
 

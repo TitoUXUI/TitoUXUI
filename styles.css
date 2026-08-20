@@ -243,6 +243,57 @@ body.state-portfolio .pov-scene {
   object-fit: cover;
 }
 
+/* ---------- Placeholder de asset pendiente ----------
+   Se usa tanto para el fondo full-bleed de la escena POV como para
+   las fotos de detalle en los paneles. Nunca es un <img> roto: es un
+   bloque con fondo neutro + texto, para que se lea como "falta subir
+   esto" y no como un error. Ver assets/_reference/README.md por las
+   medidas exactas que debe tener cada asset final. */
+.asset-pending {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background: repeating-linear-gradient(
+    135deg,
+    var(--bg-elevated-2),
+    var(--bg-elevated-2) 14px,
+    var(--bg-elevated) 14px,
+    var(--bg-elevated) 28px
+  );
+  border: 1px dashed var(--border);
+  color: var(--fg-muted);
+  font-family: var(--font-body);
+  letter-spacing: 0.02em;
+}
+
+.asset-pending--pov {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.asset-pending--panel {
+  width: 100%;
+  aspect-ratio: var(--ratio, 4 / 3);
+  border-radius: 8px;
+}
+
+.asset-pending-label {
+  max-width: 26em;
+  padding: 0 20px;
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+.asset-pending-label strong {
+  display: block;
+  color: var(--fg);
+  font-size: 0.95rem;
+  margin-bottom: 4px;
+}
+
 .pov-video {
   opacity: 0;
   transition: opacity 0.5s ease;

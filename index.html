@@ -43,21 +43,26 @@
   <section id="pov-scene" class="pov-scene" aria-label="Escritorio de Nicolás, escena interactiva de entrada">
     <div class="pov-frame">
       <!--
-        TODO(assets reales): esta es ya la foto real del escritorio. Si en algún
-        momento se suma un loop de video corto (cinemagraph: vapor del mate, luz
-        ambiente), descomentar y completar este bloque, y dejar el <img> de abajo
-        como poster:
+        TODO(asset final pendiente): reemplazar este placeholder por el fondo
+        real de la escena POV una vez generado. Medidas exactas y formato en
+        assets/_reference/README.md — en resumen: 2400×1800px (4:3, mismo
+        encuadre que la foto de referencia), JPG/PNG como poster o
+        MP4+WebM si es un loop de video. Para reemplazar:
 
-        <video class="pov-video" autoplay muted loop playsinline aria-hidden="true">
-          <source src="assets/pov/desk-loop.mp4" type="video/mp4" />
-          <source src="assets/pov/desk-loop.webm" type="video/webm" />
-        </video>
+        1) Borrar el <div class="asset-pending asset-pending--pov"> de abajo.
+        2) Poner en su lugar:
+           <img class="pov-bg" src="assets/pov/desk-scene-final.jpg" alt="..." />
+           (o el <video class="pov-video"> si es un loop, con el mismo <img>
+           como poster/fallback — main.js ya maneja ese caso).
+        3) No hace falta tocar el CSS ni las coordenadas de los hotspots: están
+           calculadas sobre el mismo encuadre que esta referencia.
       -->
-      <img
-        class="pov-bg"
-        src="assets/pov/desk-scene.JPG"
-        alt="Escritorio de Nicolás visto en primera persona: laptop y monitor externo a la izquierda, libreta y taza al centro, auriculares a la derecha."
-      />
+      <div class="asset-pending asset-pending--pov" role="img" aria-label="Escena POV: fondo del escritorio pendiente de asset final">
+        <p class="asset-pending-label">
+          <strong>Escena POV — pendiente de asset final</strong>
+          Este es un placeholder. El fondo real (foto o video del escritorio) todavía no fue generado.
+        </p>
+      </div>
 
       <!-- Cinemagraph sustituto en CSS (vapor + luz) hasta tener el video real -->
       <div class="pov-ambient" aria-hidden="true"></div>
@@ -122,7 +127,10 @@
         <h2 id="panel-mate-title">El mate galleta</h2>
         <button class="panel-close" type="button" aria-label="Cerrar">✕</button>
       </div>
-      <img src="assets/pov/mate-detail.JPG" alt="Foto detalle del mate con bombilla, listo con yerba." />
+      <!-- TODO(asset final pendiente): 1050×1400px (3:4, retrato). Ver assets/_reference/README.md -->
+      <div class="asset-pending asset-pending--panel" style="--ratio: 3 / 4" role="img" aria-label="Foto del mate pendiente de asset final">
+        <p class="asset-pending-label"><strong>Pendiente</strong>Foto del mate</p>
+      </div>
       <!-- TODO(copy real): reemplazar por la historia real del mate galleta. -->
       <p>
         Este es mi mate de todos los días — acompaña cada sesión de diseño. Acá va la historia real detrás de él
@@ -143,9 +151,12 @@
         <button class="panel-close" type="button" aria-label="Cerrar">✕</button>
       </div>
       <p>Antes de abrir Figma, paso por acá. Una página de la libreta:</p>
+      <!-- TODO(asset final pendiente): 1400×1050px (4:3). Se pueden sumar más
+           bloques .asset-pending--panel acá cuando haya más bocetos. -->
       <div class="sketch-grid">
-        <!-- TODO(assets reales): sumar más fotos/escaneos de bocetos acá cuando estén listas. -->
-        <img src="assets/pov/libreta-sketch-1.JPG" alt="Página de la libreta con un lápiz apoyado." />
+        <div class="asset-pending asset-pending--panel" style="--ratio: 4 / 3" role="img" aria-label="Boceto de la libreta pendiente de asset final">
+          <p class="asset-pending-label"><strong>Pendiente</strong>Boceto de la libreta</p>
+        </div>
       </div>
     </div>
 
@@ -161,7 +172,10 @@
         <h2 id="panel-auriculares-title">¿Qué estoy escuchando?</h2>
         <button class="panel-close" type="button" aria-label="Cerrar">✕</button>
       </div>
-      <img src="assets/pov/auriculares-detail.JPG" alt="Foto detalle del estuche de los auriculares sobre el escritorio." />
+      <!-- TODO(asset final pendiente): 1400×1050px (4:3). Ver assets/_reference/README.md -->
+      <div class="asset-pending asset-pending--panel" style="--ratio: 4 / 3" role="img" aria-label="Foto de los auriculares pendiente de asset final">
+        <p class="asset-pending-label"><strong>Pendiente</strong>Foto de los auriculares</p>
+      </div>
       <p>Según el momento del proceso, escucho distinto. Elegí un mood:</p>
       <ul class="mood-list">
         <li>
