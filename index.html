@@ -1,0 +1,404 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Nicolás — Diseñador UX/UI</title>
+<meta name="description" content="Portfolio de Nicolás, diseñador UX/UI: escritorio interactivo y proyectos organizados por audiencia." />
+
+<link
+  rel="icon"
+  href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230a0a09'/%3E%3Ctext x='16' y='23' text-anchor='middle' font-family='Georgia,serif' font-size='20' fill='%23f5f5f0'%3EN%3C/text%3E%3C/svg%3E"
+/>
+<!-- Tipografías Archivo Black (titulares) y Space Mono (interfaz) autohospedadas
+     en /assets/fonts para que el sitio funcione sin depender de una red externa. -->
+<link rel="stylesheet" href="styles.css" />
+
+<script>
+  // Aplica el tema guardado antes del primer paint, para evitar flash de tema incorrecto.
+  (function () {
+    try {
+      var saved = localStorage.getItem("tito-theme");
+      var theme = saved === "light" || saved === "dark" ? saved : "dark";
+      document.documentElement.setAttribute("data-theme", theme);
+    } catch (e) {
+      document.documentElement.setAttribute("data-theme", "dark");
+    }
+  })();
+</script>
+</head>
+<body>
+  <!-- Cursor personalizado: guía visual constante. Nunca es el único indicador
+       de interactividad (cada elemento clickeable tiene además un affordance
+       visible: anillo pulsante, chip de texto o subrayado). En pantallas
+       táctiles se desactiva por completo (ver styles.css). -->
+  <div id="custom-cursor" aria-hidden="true">
+    <div class="cursor-dot"></div>
+    <div class="cursor-label"></div>
+  </div>
+
+  <!-- =====================================================
+       ESCENA POV — escritorio de Nicolás
+       ===================================================== -->
+  <section id="pov-scene" class="pov-scene" aria-label="Escritorio de Nicolás, escena interactiva de entrada">
+    <div class="pov-frame">
+      <!-- Fondo definitivo: foto real del escritorio, animada por CSS
+           (Ken Burns sutil) para que se sienta como una foto viva en vez
+           de un loop de video generado. -->
+      <picture>
+        <source srcset="assets/pov/desk-scene.webp" type="image/webp" />
+        <img
+          class="pov-bg"
+          src="assets/pov/desk-scene.jpg"
+          alt="Escritorio de Nicolás visto en primera persona: laptop y monitor externo a la izquierda, libreta y taza al centro, auriculares a la derecha."
+          fetchpriority="high"
+        />
+      </picture>
+
+      <!-- Vapor del mate: 3 líneas SVG que suben y se desvanecen en loop,
+           superpuestas sobre la posición real del mate en la foto. -->
+      <div class="pov-steam" aria-hidden="true" style="--x: 82%; --y: 49%">
+        <svg viewBox="0 0 40 90" width="40" height="90" aria-hidden="true">
+          <path class="steam-path steam-path--1" d="M20 88 C 8 70, 30 55, 18 40 C 8 28, 26 15, 20 2" />
+          <path class="steam-path steam-path--2" d="M14 88 C 24 72, 6 58, 16 42 C 26 30, 10 16, 16 2" />
+          <path class="steam-path steam-path--3" d="M26 88 C 16 70, 34 56, 22 40 C 12 26, 28 14, 22 2" />
+        </svg>
+      </div>
+
+      <!-- Flicker de luz ambiente sutil -->
+      <div class="pov-ambient" aria-hidden="true"></div>
+
+      <button
+        class="hotspot"
+        type="button"
+        data-panel="panel-mate"
+        data-cursor-text="Ver el mate"
+        style="--x: 82%; --y: 49%"
+        aria-haspopup="dialog"
+      >
+        <span class="hotspot-ring" aria-hidden="true"></span>
+        <span class="hotspot-chip">Mi mate</span>
+      </button>
+
+      <button
+        class="hotspot"
+        type="button"
+        data-panel="panel-libreta"
+        data-cursor-text="Ver bocetos"
+        style="--x: 54%; --y: 58%"
+        aria-haspopup="dialog"
+      >
+        <span class="hotspot-ring" aria-hidden="true"></span>
+        <span class="hotspot-chip">Libreta</span>
+      </button>
+
+      <button
+        class="hotspot"
+        type="button"
+        data-panel="panel-auriculares"
+        data-cursor-text="Elegir música"
+        style="--x: 91%; --y: 58%"
+        aria-haspopup="dialog"
+      >
+        <span class="hotspot-ring" aria-hidden="true"></span>
+        <span class="hotspot-chip">Auriculares</span>
+      </button>
+
+      <button
+        class="hotspot hotspot--screen"
+        type="button"
+        data-action="enter-portfolio"
+        data-cursor-text="Entrar al portfolio"
+        style="--x: 50%; --y: 25%"
+        aria-label="Entrar al portfolio"
+      >
+        <span class="visually-hidden">Hacer click para entrar al portfolio</span>
+      </button>
+    </div>
+
+    <p class="pov-fallback-hint">
+      Hacé click en los objetos del escritorio para explorar. Hacé click en la pantalla para entrar al portfolio.
+    </p>
+  </section>
+
+  <!-- Paneles de los hotspots (mate / libreta / auriculares) -->
+  <div class="panel-overlay" id="panel-overlay" hidden>
+    <div class="panel" id="panel-mate" role="dialog" aria-modal="true" aria-labelledby="panel-mate-title" hidden>
+      <div class="panel-head">
+        <h2 id="panel-mate-title">El mate galleta</h2>
+        <button class="panel-close icon-btn" type="button" aria-label="Cerrar">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" width="100%" height="100%">
+            <path d="M6 6l12 12M18 6L6 18" />
+          </svg>
+        </button>
+      </div>
+      <!-- TODO(asset final pendiente): 1050×1400px (3:4, retrato). Ver assets/_reference/README.md -->
+      <div class="asset-pending asset-pending--panel" style="--ratio: 3 / 4" role="img" aria-label="Foto del mate pendiente de asset final">
+        <p class="asset-pending-label"><strong>Pendiente</strong>Foto del mate</p>
+      </div>
+      <!-- TODO(copy real): reemplazar por la historia real del mate galleta. -->
+      <p>
+        Este es mi mate de todos los días — acompaña cada sesión de diseño. Acá va la historia real detrás de él
+        (de dónde salió, por qué "galleta", qué representa) cuando la termine de escribir.
+      </p>
+    </div>
+
+    <div
+      class="panel"
+      id="panel-libreta"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="panel-libreta-title"
+      hidden
+    >
+      <div class="panel-head">
+        <h2 id="panel-libreta-title">Bocetos a mano</h2>
+        <button class="panel-close icon-btn" type="button" aria-label="Cerrar">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" width="100%" height="100%">
+            <path d="M6 6l12 12M18 6L6 18" />
+          </svg>
+        </button>
+      </div>
+      <p>Antes de abrir Figma, paso por acá. Una página de la libreta:</p>
+      <!-- TODO(asset final pendiente): 1400×1050px (4:3). Se pueden sumar más
+           bloques .asset-pending--panel acá cuando haya más bocetos. -->
+      <div class="sketch-grid">
+        <div class="asset-pending asset-pending--panel" style="--ratio: 4 / 3" role="img" aria-label="Boceto de la libreta pendiente de asset final">
+          <p class="asset-pending-label"><strong>Pendiente</strong>Boceto de la libreta</p>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="panel"
+      id="panel-auriculares"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="panel-auriculares-title"
+      hidden
+    >
+      <div class="panel-head">
+        <h2 id="panel-auriculares-title">¿Qué estoy escuchando?</h2>
+        <button class="panel-close icon-btn" type="button" aria-label="Cerrar">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" width="100%" height="100%">
+            <path d="M6 6l12 12M18 6L6 18" />
+          </svg>
+        </button>
+      </div>
+      <!-- TODO(asset final pendiente): 1400×1050px (4:3). Ver assets/_reference/README.md -->
+      <div class="asset-pending asset-pending--panel" style="--ratio: 4 / 3" role="img" aria-label="Foto de los auriculares pendiente de asset final">
+        <p class="asset-pending-label"><strong>Pendiente</strong>Foto de los auriculares</p>
+      </div>
+      <p>Según el momento del proceso, escucho distinto. Elegí un mood:</p>
+      <ul class="mood-list">
+        <li>
+          <button class="mood-button" type="button" data-mood="concentracion" aria-pressed="false">
+            Concentración
+          </button>
+        </li>
+        <li>
+          <button class="mood-button" type="button" data-mood="creativa" aria-pressed="false">Creativa</button>
+        </li>
+        <li>
+          <button class="mood-button" type="button" data-mood="tranquila" aria-pressed="false">Tranquila</button>
+        </li>
+      </ul>
+      <!-- TODO(assets reales): completar SPOTIFY_PLAYLISTS en main.js con los IDs reales. -->
+      <div class="mood-embed" id="mood-embed">Elegí un mood para ver la playlist.</div>
+    </div>
+  </div>
+
+  <!-- =====================================================
+       PORTFOLIO
+       ===================================================== -->
+  <div id="portfolio" class="portfolio" hidden>
+    <nav class="navbar">
+      <button class="nav-brand" type="button" data-action="back-to-desk" data-cursor-text="Volver al escritorio">
+        Nicolás
+      </button>
+
+      <div class="nav-tabs" role="radiogroup" aria-label="Elegí tu perfil de visitante">
+        <button
+          class="nav-tab is-active"
+          type="button"
+          role="radio"
+          aria-checked="true"
+          tabindex="0"
+          data-audience="anyone"
+        >
+          Para cualquiera
+        </button>
+        <button
+          class="nav-tab"
+          type="button"
+          role="radio"
+          aria-checked="false"
+          tabindex="-1"
+          data-audience="recruiters"
+        >
+          Reclutadores
+        </button>
+        <button
+          class="nav-tab"
+          type="button"
+          role="radio"
+          aria-checked="false"
+          tabindex="-1"
+          data-audience="design-leads"
+        >
+          Directores de diseño
+        </button>
+        <button class="nav-tab" type="button" role="radio" aria-checked="false" tabindex="-1" data-audience="pm">
+          Product Managers
+        </button>
+        <button
+          class="nav-tab"
+          type="button"
+          role="radio"
+          aria-checked="false"
+          tabindex="-1"
+          data-audience="designers"
+        >
+          Otros diseñadores
+        </button>
+      </div>
+
+      <button id="theme-toggle" class="theme-toggle" type="button" aria-pressed="false">
+        <span class="theme-icon theme-icon--sun icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" width="100%" height="100%">
+            <circle cx="12" cy="12" r="4.5" />
+            <path d="M12 2.5v2.5M12 19v2.5M4.22 4.22l1.77 1.77M18 18l1.77 1.77M2.5 12H5M19 12h2.5M4.22 19.78l1.77-1.77M18 6l1.77-1.77" />
+          </svg>
+        </span>
+        <span class="theme-icon theme-icon--moon icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="100%" height="100%">
+            <path d="M20.2 14.7A8.6 8.6 0 1 1 9.3 3.8a7 7 0 0 0 10.9 10.9z" />
+          </svg>
+        </span>
+        <span class="label-text">Modo claro</span>
+      </button>
+    </nav>
+
+    <header class="hero">
+      <div class="hero-title-wrap">
+        <h1 class="hero-title" id="hero-title" aria-live="polite">
+          <span>Hola, soy Nicolás.</span>
+          <span>Diseño interfaces que ayudan</span>
+          <span>a las personas sin</span>
+          <span>hacerles pensar de más.</span>
+        </h1>
+      </div>
+    </header>
+
+    <section class="values" aria-labelledby="values-title">
+      <h2 class="section-title" id="values-title">Valores</h2>
+      <ul class="values-grid">
+        <li class="value-card">
+          <h3>Proceso analógico</h3>
+          <p>Lápiz y papel primero. Bocetear a mano ordena mis ideas antes de que toquen una pantalla.</p>
+        </li>
+        <li class="value-card">
+          <h3>Calma y naturaleza</h3>
+          <p>Diseño mejor cuando bajo el ritmo. Busco esa misma calma en las interfaces que construyo.</p>
+        </li>
+        <li class="value-card">
+          <h3>Curiosidad por IA</h3>
+          <p>Pruebo herramientas nuevas todo el tiempo. Me interesa cómo la IA cambia el proceso, no solo el resultado.</p>
+        </li>
+        <li class="value-card">
+          <h3>Motion graphics</h3>
+          <p>El movimiento comunica lo que un mockup estático no puede. Lo uso como lenguaje, no como decoración.</p>
+        </li>
+      </ul>
+    </section>
+
+    <section class="projects" aria-labelledby="projects-title">
+      <h2 class="section-title" id="projects-title">Proyectos</h2>
+
+      <article class="project-card">
+        <div class="project-head">
+          <h3>Proyecto 01</h3>
+          <span class="badge">Próximamente</span>
+        </div>
+        <p class="project-summary">
+          <!-- TODO(copy real): reemplazar por el resumen real del proyecto. -->
+          Estoy terminando de documentar este caso. Mientras tanto, algunos puntos clave del proceso:
+        </p>
+        <ul class="project-bullets">
+          <li>Research y definición del problema</li>
+          <li>Iteración de flujos y wireframes</li>
+          <li>UI final y sistema de componentes</li>
+        </ul>
+
+        <div class="audio-player">
+          <button class="audio-play-toggle icon-btn" type="button" aria-label="Reproducir narración del proyecto 01">
+            <span class="play-icon icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="currentColor" width="100%" height="100%"><path d="M8 5v14l11-7z" /></svg>
+            </span>
+            <span class="pause-icon icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="currentColor" width="100%" height="100%"><path d="M7 5h4v14H7zM13 5h4v14h-4z" /></svg>
+            </span>
+          </button>
+          <div class="audio-meta">
+            <span class="audio-label">Narración accesible del proyecto</span>
+            <span class="audio-status" aria-live="polite">Sin reproducir.</span>
+          </div>
+          <!-- TODO(assets reales): grabar y subir el audio narrado a assets/audio/. -->
+          <audio preload="none" data-src="assets/audio/proyecto-01-narracion.mp3"></audio>
+          <div class="audio-speed" role="group" aria-label="Velocidad de reproducción">
+            <button class="speed-btn" type="button" data-rate="0.75" aria-pressed="false">0.75×</button>
+            <button class="speed-btn" type="button" data-rate="1" aria-pressed="true">1×</button>
+            <button class="speed-btn" type="button" data-rate="1.25" aria-pressed="false">1.25×</button>
+            <button class="speed-btn" type="button" data-rate="1.5" aria-pressed="false">1.5×</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="project-card">
+        <div class="project-head">
+          <h3>Proyecto 02</h3>
+          <span class="badge">Próximamente</span>
+        </div>
+        <p class="project-summary">
+          <!-- TODO(copy real): reemplazar por el resumen real del proyecto. -->
+          Segundo caso en preparación. Va a sumarse con el mismo detalle de proceso que el primero.
+        </p>
+        <ul class="project-bullets">
+          <li>Research y definición del problema</li>
+          <li>Iteración de flujos y wireframes</li>
+          <li>UI final y sistema de componentes</li>
+        </ul>
+
+        <div class="audio-player">
+          <button class="audio-play-toggle icon-btn" type="button" aria-label="Reproducir narración del proyecto 02">
+            <span class="play-icon icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="currentColor" width="100%" height="100%"><path d="M8 5v14l11-7z" /></svg>
+            </span>
+            <span class="pause-icon icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="currentColor" width="100%" height="100%"><path d="M7 5h4v14H7zM13 5h4v14h-4z" /></svg>
+            </span>
+          </button>
+          <div class="audio-meta">
+            <span class="audio-label">Narración accesible del proyecto</span>
+            <span class="audio-status" aria-live="polite">Sin reproducir.</span>
+          </div>
+          <audio preload="none" data-src="assets/audio/proyecto-02-narracion.mp3"></audio>
+          <div class="audio-speed" role="group" aria-label="Velocidad de reproducción">
+            <button class="speed-btn" type="button" data-rate="0.75" aria-pressed="false">0.75×</button>
+            <button class="speed-btn" type="button" data-rate="1" aria-pressed="true">1×</button>
+            <button class="speed-btn" type="button" data-rate="1.25" aria-pressed="false">1.25×</button>
+            <button class="speed-btn" type="button" data-rate="1.5" aria-pressed="false">1.5×</button>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <footer class="site-footer">
+      <span>© 2026 Nicolás. Portfolio en construcción.</span>
+      <button class="footer-back" type="button" data-action="back-to-desk">↑ Volver al escritorio</button>
+    </footer>
+  </div>
+
+  <script src="main.js" defer></script>
+</body>
+</html>
