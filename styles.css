@@ -91,6 +91,18 @@ a {
   outline-offset: 3px;
 }
 
+/* Superficies de navegador: el texto seleccionado y la scrollbar también
+   llevan el sistema de color, no el default del navegador. */
+::selection {
+  background: var(--accent);
+  color: var(--accent-fg);
+}
+
+:root {
+  scrollbar-color: var(--border) transparent;
+  scrollbar-width: thin;
+}
+
 /* ---------- Tipografía ----------
    Combinación disruptiva: grotesca muy gruesa (titulares) + monoespaciada
    (interfaz), autohospedadas en /assets/fonts — sin dependencia de red externa. */
@@ -123,6 +135,37 @@ a {
   --font-body: "Space Mono", "SFMono-Regular", "Courier New", monospace;
 }
 
+/* ---------- Iconos ----------
+   Sistema de iconos único: SVG con un solo peso de trazo (1.75) o
+   sólidos, nunca emoji/glyphs unicode. Tamaño consistente vía .icon. */
+.icon {
+  display: inline-flex;
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+}
+
+.icon-btn {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--fg);
+  transition: border-color 0.15s ease, background-color 0.15s ease, transform 0.1s ease;
+}
+
+.icon-btn:hover {
+  border-color: var(--accent);
+}
+
+.icon-btn:active {
+  transform: scale(0.94);
+}
+
 /* ---------- Cursor custom ---------- */
 #custom-cursor {
   position: fixed;
@@ -146,23 +189,23 @@ a {
 }
 
 .cursor-dot {
+  /* Tamaño de reposo (12px) logrado escalando la caja de 44px (el tamaño
+     activo) en vez de animar width/height/top/left — evita layout thrash,
+     solo transform + color, corre en el compositor. */
   position: absolute;
-  top: -6px;
-  left: -6px;
-  width: 12px;
-  height: 12px;
+  top: -22px;
+  left: -22px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
   border: 1.5px solid var(--fg);
   background: transparent;
-  transition: width 0.15s ease, height 0.15s ease, top 0.15s ease, left 0.15s ease,
-    background-color 0.15s ease, border-color 0.15s ease;
+  transform: scale(0.273);
+  transition: transform 0.15s ease, background-color 0.15s ease, border-color 0.15s ease;
 }
 
 #custom-cursor.is-active .cursor-dot {
-  width: 44px;
-  height: 44px;
-  top: -22px;
-  left: -22px;
+  transform: scale(1);
   background: var(--accent);
   border-color: var(--accent);
 }
@@ -439,19 +482,25 @@ body.state-portfolio .pov-scene {
   transform: translate(-50%, -50%);
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 10px;
+  gap: 8px;
+  padding: 8px;
   border-radius: 999px;
+  transition: transform 0.1s ease;
+}
+
+.hotspot:active {
+  transform: translate(-50%, -50%) scale(0.94);
 }
 
 .hotspot-ring {
-  width: 22px;
-  height: 22px;
+  width: 24px;
+  height: 24px;
   border-radius: 50%;
   border: 2px solid var(--fg);
   background: rgba(245, 245, 240, 0.08);
   position: relative;
   flex-shrink: 0;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
 }
 
 .hotspot-ring::after {
@@ -484,7 +533,7 @@ body.state-portfolio .pov-scene {
   text-transform: uppercase;
   background: var(--fg);
   color: var(--bg);
-  padding: 5px 10px;
+  padding: 4px 12px;
   border-radius: 999px;
   opacity: 0;
   transform: translateX(-6px);
@@ -542,7 +591,7 @@ body.state-portfolio .pov-scene {
   background: var(--bg-elevated);
   border: 1px solid var(--border);
   border-radius: 16px;
-  padding: 28px;
+  padding: 32px;
   box-shadow: 0 20px 60px var(--shadow);
   opacity: 0;
   transform: translateY(12px) scale(0.98);
@@ -571,22 +620,12 @@ body.state-portfolio .pov-scene {
   font-size: 1.4rem;
   margin: 0;
   line-height: 1.15;
+  text-wrap: balance;
 }
 
-.panel-close {
-  flex-shrink: 0;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  border: 1px solid var(--border);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.1rem;
-}
-
-.panel-close:hover {
-  background: var(--bg-elevated-2);
+.panel-close .icon {
+  width: 15px;
+  height: 15px;
 }
 
 .panel p {
@@ -618,13 +657,17 @@ body.state-portfolio .pov-scene {
 .mood-button {
   width: 100%;
   text-align: left;
-  padding: 14px 16px;
+  padding: 16px;
   border: 1px solid var(--border);
   border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  transition: border-color 0.2s ease, background-color 0.2s ease;
+  transition: border-color 0.15s ease, background-color 0.15s ease, transform 0.1s ease;
+}
+
+.mood-button:active {
+  transform: scale(0.99);
 }
 
 .mood-button:hover,
@@ -658,7 +701,7 @@ body.state-portfolio .pov-scene {
 
 .portfolio {
   min-height: 100vh;
-  padding-top: 68px;
+  padding-top: 64px;
 }
 
 /* ---------- Navbar ---------- */
@@ -668,12 +711,12 @@ body.state-portfolio .pov-scene {
   left: 0;
   right: 0;
   z-index: 200;
-  height: 68px;
+  height: 64px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  padding: 0 20px;
+  padding: 0 24px;
   background: color-mix(in srgb, var(--bg) 88%, transparent);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--border);
@@ -684,20 +727,25 @@ body.state-portfolio .pov-scene {
   font-size: 1rem;
   letter-spacing: 0.02em;
   flex-shrink: 0;
+  border-radius: 4px;
+  transition: opacity 0.15s ease;
+}
+
+.nav-brand:hover {
+  opacity: 0.7;
 }
 
 .nav-tabs {
   display: flex;
   gap: 4px;
   overflow-x: auto;
-  scrollbar-width: thin;
   flex: 1;
   padding: 4px 0;
 }
 
 .nav-tab {
   flex-shrink: 0;
-  padding: 8px 14px;
+  padding: 8px 16px;
   font-family: var(--font-body);
   font-size: 0.78rem;
   letter-spacing: 0.01em;
@@ -705,11 +753,15 @@ body.state-portfolio .pov-scene {
   border-radius: 999px;
   border: 1px solid transparent;
   white-space: nowrap;
-  transition: color 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
+  transition: color 0.15s ease, border-color 0.15s ease, background-color 0.15s ease, transform 0.1s ease;
 }
 
 .nav-tab:hover {
   color: var(--fg);
+}
+
+.nav-tab:active {
+  transform: scale(0.96);
 }
 
 .nav-tab.is-active {
@@ -723,30 +775,38 @@ body.state-portfolio .pov-scene {
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 8px 14px;
+  padding: 8px 16px;
   border: 1px solid var(--border);
   border-radius: 999px;
   font-size: 0.78rem;
+  transition: border-color 0.15s ease, transform 0.1s ease;
 }
 
 .theme-toggle:hover {
   border-color: var(--accent);
 }
 
-/* ---------- Hero reactivo ---------- */
-.hero {
-  padding: 64px 20px 40px;
-  max-width: 1100px;
-  margin: 0 auto;
+.theme-toggle:active {
+  transform: scale(0.96);
 }
 
-.hero-eyebrow {
-  font-family: var(--font-body);
-  font-size: 0.78rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--accent);
-  margin: 0 0 18px;
+.theme-icon--moon {
+  display: none;
+}
+
+:root[data-theme="light"] .theme-icon--sun {
+  display: none;
+}
+
+:root[data-theme="light"] .theme-icon--moon {
+  display: inline-flex;
+}
+
+/* ---------- Hero reactivo ---------- */
+.hero {
+  padding: 64px 24px 48px;
+  max-width: 1100px;
+  margin: 0 auto;
 }
 
 .hero-title-wrap {
@@ -762,6 +822,7 @@ body.state-portfolio .pov-scene {
   font-size: clamp(2.1rem, 6.4vw, 4.6rem);
   line-height: 1.05;
   letter-spacing: -0.01em;
+  text-wrap: balance;
   transition: opacity 0.22s ease;
 }
 
@@ -783,7 +844,7 @@ body.state-portfolio .pov-scene {
 .values {
   max-width: 1100px;
   margin: 0 auto;
-  padding: 40px 20px 80px;
+  padding: 48px 24px 80px;
   border-top: 1px solid var(--border);
 }
 
@@ -791,6 +852,7 @@ body.state-portfolio .pov-scene {
   font-family: var(--font-display);
   font-size: clamp(1.4rem, 3vw, 2rem);
   margin: 32px 0 24px;
+  text-wrap: balance;
 }
 
 .values-grid {
@@ -814,8 +876,9 @@ body.state-portfolio .pov-scene {
   font-size: 0.95rem;
   text-transform: uppercase;
   letter-spacing: 0.03em;
-  margin: 0 0 10px;
+  margin: 0 0 8px;
   color: var(--accent);
+  text-wrap: balance;
 }
 
 .value-card p {
@@ -829,14 +892,18 @@ body.state-portfolio .pov-scene {
 .projects {
   max-width: 1100px;
   margin: 0 auto;
-  padding: 0 20px 80px;
+  padding: 0 24px 80px;
 }
 
 .project-card {
   border: 1px solid var(--border);
-  border-radius: 14px;
+  border-radius: 16px;
   padding: 24px;
-  margin-bottom: 18px;
+  margin-bottom: 24px;
+}
+
+.project-card:last-child {
+  margin-bottom: 0;
 }
 
 .project-head {
@@ -851,6 +918,7 @@ body.state-portfolio .pov-scene {
   font-family: var(--font-display);
   font-size: 1.15rem;
   margin: 0;
+  text-wrap: balance;
 }
 
 .badge {
@@ -880,29 +948,26 @@ body.state-portfolio .pov-scene {
 
 /* ---------- Reproductor de audio accesible ---------- */
 .audio-player {
-  margin-top: 18px;
-  padding: 14px 16px;
+  margin-top: 16px;
+  padding: 16px;
   border: 1px solid var(--border);
-  border-radius: 10px;
+  border-radius: 12px;
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 16px;
   flex-wrap: wrap;
 }
 
-.audio-play-toggle {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  border: 1px solid var(--border);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
+.audio-play-toggle .pause-icon {
+  display: none;
 }
 
-.audio-play-toggle:hover {
-  border-color: var(--accent);
+.audio-play-toggle.is-playing .play-icon {
+  display: none;
+}
+
+.audio-play-toggle.is-playing .pause-icon {
+  display: inline-flex;
 }
 
 .audio-meta {
@@ -928,10 +993,16 @@ body.state-portfolio .pov-scene {
 }
 
 .speed-btn {
-  padding: 5px 8px;
+  padding: 4px 8px;
   font-size: 0.68rem;
+  font-variant-numeric: tabular-nums;
   border: 1px solid var(--border);
   border-radius: 6px;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+
+.speed-btn:hover {
+  border-color: var(--accent);
 }
 
 .speed-btn[aria-pressed="true"] {
@@ -943,7 +1014,7 @@ body.state-portfolio .pov-scene {
 .site-footer {
   max-width: 1100px;
   margin: 0 auto;
-  padding: 24px 20px 60px;
+  padding: 24px 24px 64px;
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
@@ -1004,7 +1075,7 @@ body.state-portfolio .pov-scene {
   .navbar {
     flex-wrap: wrap;
     height: auto;
-    padding: 10px 14px;
+    padding: 12px 16px;
   }
   .nav-tabs {
     order: 3;

@@ -291,15 +291,12 @@
   var AUDIENCE_KEY = "tito-audience";
   var navTabs = Array.prototype.slice.call(document.querySelectorAll(".nav-tab"));
   var heroTitle = document.getElementById("hero-title");
-  var heroEyebrow = document.getElementById("hero-eyebrow");
 
   var AUDIENCE_COPY = {
     anyone: {
-      eyebrow: "Para cualquiera",
       lines: ["Hola, soy Nicolás.", "Diseño interfaces que ayudan", "a las personas sin", "hacerles pensar de más."]
     },
     recruiters: {
-      eyebrow: "Reclutadores",
       lines: [
         "Diseñador UX/UI con",
         "proceso prolijo, de punta",
@@ -308,11 +305,9 @@
       ]
     },
     "design-leads": {
-      eyebrow: "Directores de diseño",
       lines: ["Pienso en sistemas,", "no en pantallas sueltas.", "Proceso claro: del research", "al detalle final."]
     },
     pm: {
-      eyebrow: "Product Managers",
       lines: [
         "Traduzco objetivos de negocio",
         "en flujos que la gente",
@@ -321,7 +316,6 @@
       ]
     },
     designers: {
-      eyebrow: "Otros diseñadores",
       lines: [
         "Dibujo a mano antes",
         "de abrir Figma. Me obsesiona",
@@ -334,7 +328,6 @@
   function renderHero(audience, animate) {
     var data = AUDIENCE_COPY[audience] || AUDIENCE_COPY.anyone;
     var setContent = function () {
-      if (heroEyebrow) heroEyebrow.textContent = data.eyebrow;
       if (heroTitle) {
         heroTitle.innerHTML = data.lines.map(function (line) {
           return "<span>" + line + "</span>";
@@ -436,7 +429,7 @@
           playPromise
             .then(function () {
               playBtn.setAttribute("aria-label", "Pausar narración");
-              playBtn.textContent = "⏸";
+              playBtn.classList.add("is-playing");
               setStatus("Reproduciendo…");
             })
             .catch(function () {
@@ -450,14 +443,14 @@
 
     audio.addEventListener("pause", function () {
       playBtn.setAttribute("aria-label", "Reproducir narración");
-      playBtn.textContent = "▶";
+      playBtn.classList.remove("is-playing");
       if (!audio.ended) setStatus("Pausado.");
     });
 
     audio.addEventListener("ended", function () {
       setStatus("Narración finalizada.");
       playBtn.setAttribute("aria-label", "Reproducir narración");
-      playBtn.textContent = "▶";
+      playBtn.classList.remove("is-playing");
     });
 
     speedBtns.forEach(function (btn) {
