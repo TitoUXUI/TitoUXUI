@@ -1,4 +1,10 @@
-# TitoUXUI — Claude Skills
+# TitoUXUI
+
+## Ministerio de Adolescentes
+
+La carpeta [`ministerio/`](ministerio/) contiene el MVP de una PWA (Next.js + Supabase) para gestionar el ministerio de adolescentes de una iglesia: directorio, calendario con itinerario y notificaciones push, tareas, muro y reporte mensual para los ancianos. Ver [`ministerio/README.md`](ministerio/README.md) para levantarlo local y desplegarlo.
+
+## Claude Skills
 
 Colección de skills para Claude Code instaladas en este repositorio bajo `.claude/skills/`. Cada carpeta contiene un `SKILL.md` (y, cuando aplica, `references/`, `scripts/`, `templates/`, etc.) tal como lo publica su repositorio de origen.
 
